@@ -1,138 +1,281 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rixala - Инновационные решения</title>
+    <title>Product | Coming Soon</title>
     
-    <!-- Подключение Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Подключение иконок Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Кастомные стили для анимаций (замена framer-motion) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        excel: '#10b981',
+                        dark: '#09090b',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        body {
+            background-color: #09090b;
+            color: #ffffff;
+            overflow: hidden;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            z-index: -2;
         }
 
-        .animate-fade-in-up {
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
+        #pulses-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        .animate-fade-in {
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
+        @keyframes pulse-h {
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100vw); opacity: 0; }
         }
 
-        /* Задержки для анимаций */
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-800 { animation-delay: 0.8s; }
-        .delay-1000 { animation-delay: 1s; }
+        @keyframes pulse-v {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .strict-transition {
+            transition: all 0.1s linear;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #09090b inset !important;
+            -webkit-text-fill-color: white !important;
+        }
+
+        .lang-btn.active {
+            color: #10b981;
+            border-bottom: 1px solid #10b981;
+        }
     </style>
 </head>
-<body>
-    <div class="min-h-screen bg-slate-950 flex flex-col items-center justify-center relative overflow-hidden font-sans text-slate-200">
-      
-        <!-- Абстрактный фоновый элемент -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+<body class="min-h-screen flex flex-col justify-center items-center relative selection:bg-excel selection:text-dark">
 
-        <!-- Основной контент -->
-        <main class="z-10 flex flex-col items-center text-center px-6 max-w-2xl w-full">
-            
-            <!-- Заголовок -->
-            <div class="animate-fade-in-up">
-                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                    rixala
-                </h1>
-            </div>
+    <div class="grid-background"></div>
+    <div id="pulses-container"></div>
 
-            <!-- Подзаголовок -->
-            <div class="animate-fade-in-up delay-200">
-                <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-md mx-auto">
-                    Инновационные решения в разработке. <br/> Мы готовим что-то особенное.
-                </p>
-            </div>
-
-            <!-- Форма подписки -->
-            <div class="animate-fade-in-up delay-400 w-full max-w-sm mb-12">
-                <form class="flex items-center bg-slate-900 border border-slate-800 rounded-full p-1 overflow-hidden" onsubmit="event.preventDefault();">
-                    <input 
-                        type="email" 
-                        placeholder="Ваш email для новостей..." 
-                        class="bg-transparent border-none outline-none text-sm px-4 py-2 w-full text-slate-200 placeholder-slate-500"
-                        required
-                    />
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors">
-                        Узнать первым
-                    </button>
-                </form>
-            </div>
-
-            <!-- Социальные сети -->
-            <div class="animate-fade-in delay-800 flex flex-wrap justify-center gap-6 max-w-lg">
-                <a href="https://t.me/rixala_official" target="_blank" class="text-slate-500 hover:text-blue-400 transition-colors" aria-label="Telegram">
-                    <i data-lucide="send" class="w-6 h-6"></i>
-                </a>
-                <a href="https://www.instagram.com/rixala_official" target="_blank" class="text-slate-500 hover:text-pink-500 transition-colors" aria-label="Instagram">
-                    <i data-lucide="instagram" class="w-6 h-6"></i>
-                </a>
-                <a href="https://www.tiktok.com/@rixala" target="_blank" class="text-slate-500 hover:text-white transition-colors" aria-label="TikTok">
-                    <!-- Кастомная иконка TikTok -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/company/rixala_official" target="_blank" class="text-slate-500 hover:text-blue-500 transition-colors" aria-label="LinkedIn">
-                    <i data-lucide="linkedin" class="w-6 h-6"></i>
-                </a>
-                <a href="https://www.facebook.com/rixalaofficial" target="_blank" class="text-slate-500 hover:text-blue-600 transition-colors" aria-label="Facebook">
-                    <i data-lucide="facebook" class="w-6 h-6"></i>
-                </a>
-                <a href="https://www.twitter.com/rixala_official" target="_blank" class="text-slate-500 hover:text-blue-400 transition-colors" aria-label="Twitter">
-                    <i data-lucide="twitter" class="w-6 h-6"></i>
-                </a>
-                <a href="https://www.github.com/rixala" target="_blank" class="text-slate-500 hover:text-white transition-colors" aria-label="GitHub">
-                    <i data-lucide="github" class="w-6 h-6"></i>
-                </a>
-                <a href="https://www.rixala.com" target="_blank" class="text-slate-500 hover:text-blue-400 transition-colors" aria-label="Website">
-                    <i data-lucide="globe" class="w-6 h-6"></i>
-                </a>
-                <a href="mailto:hello@rixala.com" class="text-slate-500 hover:text-blue-400 transition-colors" aria-label="Email">
-                    <i data-lucide="mail" class="w-6 h-6"></i>
-                </a>
-            </div>
-        </main>
-
-        <!-- Футер -->
-        <footer class="animate-fade-in delay-1000 absolute bottom-6 text-sm text-slate-600">
-            © <span id="current-year"></span> rixala. Все права защищены.
-        </footer>
+    <div class="absolute top-6 right-6 flex gap-4 font-mono text-xs text-zinc-500 z-20">
+        <button class="lang-btn hover:text-white strict-transition pb-1" data-lang="en">EN</button>
+        <button class="lang-btn hover:text-white strict-transition pb-1" data-lang="es">ES</button>
+        <button class="lang-btn hover:text-white strict-transition pb-1" data-lang="ru">RU</button>
+        <button class="lang-btn hover:text-white strict-transition pb-1" data-lang="jp">JP</button>
+        <button class="lang-btn hover:text-white strict-transition pb-1" data-lang="cn">CN</button>
     </div>
 
-    <!-- Скрипты инициализации -->
-    <script>
-        // Инициализация иконок Lucide
-        lucide.createIcons();
+    <main class="w-full max-w-2xl px-6 relative z-10 flex flex-col items-center text-center">
+        
+        <div class="w-12 h-12 border border-zinc-700 flex items-center justify-center mb-8 bg-dark">
+            <div class="w-4 h-4 bg-excel"></div>
+        </div>
 
-        // Установка текущего года в футере
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        <h1 id="t-title" class="text-4xl md:text-5xl font-semibold tracking-tight text-white mb-4">
+            Absolute precision.
+        </h1>
+        
+        <p id="t-desc" class="text-zinc-400 text-base md:text-lg max-w-lg mb-10 font-light leading-relaxed">
+            The system is in the final calibration stage. Leave your email to get access to the tool that will change your approach to data work. No spam. Only results.
+        </p>
+
+        <div id="success-message" class="hidden text-excel font-mono text-sm mb-12 border border-excel px-6 py-3 bg-excel/10">
+            <span id="t-success">> REQUEST ACCEPTED. WAIT FOR INSTRUCTIONS.</span>
+        </div>
+
+        <div class="flex flex-col items-center gap-4">
+            <span id="t-socials" class="text-zinc-600 font-mono text-xs uppercase tracking-widest">Contact Channels</span>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="#" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://x.com/rixala_official" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="Twitter"> X <i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://facebook.com/rixalaofficial/" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/rixala_official/" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@rixala" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="mailto:" class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-excel hover:border-excel bg-dark strict-transition" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const gridSize = 40;
+        const pulsesContainer = document.getElementById('pulses-container');
+
+        function createPulse() {
+            const isHorizontal = Math.random() > 0.5;
+            const pulse = document.createElement('div');
+            
+            pulse.style.position = 'absolute';
+            pulse.style.boxShadow = '0 0 10px #10b981, 0 0 20px #10b981';
+            
+            const duration = 1.5 + Math.random() * 1.5;
+
+            if (isHorizontal) {
+                const maxLines = Math.floor(window.innerHeight / gridSize);
+                const randomLine = Math.floor(Math.random() * maxLines);
+                
+                pulse.style.top = `${randomLine * gridSize}px`;
+                pulse.style.left = '0';
+                pulse.style.width = '150px';
+                pulse.style.height = '1px';
+                pulse.style.background = 'linear-gradient(90deg, transparent, #10b981 80%, #ffffff)';
+                pulse.style.animation = `pulse-h ${duration}s linear forwards`;
+            } else {
+                const maxLines = Math.floor(window.innerWidth / gridSize);
+                const randomLine = Math.floor(Math.random() * maxLines);
+                
+                pulse.style.left = `${randomLine * gridSize}px`;
+                pulse.style.top = '0';
+                pulse.style.width = '1px';
+                pulse.style.height = '150px';
+                pulse.style.background = 'linear-gradient(180deg, transparent, #10b981 80%, #ffffff)';
+                pulse.style.animation = `pulse-v ${duration}s linear forwards`;
+            }
+
+            pulsesContainer.appendChild(pulse);
+
+            setTimeout(() => {
+                pulse.remove();
+            }, duration * 1000);
+        }
+
+        function scheduleNextPulse() {
+            createPulse();
+            const nextTime = 300 + Math.random() * 800;
+            setTimeout(scheduleNextPulse, nextTime);
+        }
+        
+        for(let i=0; i<3; i++) createPulse();
+        scheduleNextPulse();
+
+        const translations = {
+            en: {
+                title: "Rixala - Absolute precision.",
+                desc: "The system is in the final calibration stage. Leave your email to get access to the tool that will change your approach to data. No spam. Only results.",
+                btn: "Access",
+                success: "> REQUEST ACCEPTED. AWAIT INSTRUCTIONS.",
+                socials: "Channels"
+            },
+            es: {
+                title: "Rixala - Precisión absoluta.",
+                desc: "El sistema se encuentra en la etapa de calibración final. Deje su correo electrónico para acceder a la herramienta que cambiará su enfoque de los datos. Sin spam. Solo resultados.",
+                btn: "Acceso",
+                success: "> SOLICITUD ACEPTADA. ESPERE INSTRUCCIONES.",
+                socials: "Canales"
+            },
+            ru: {
+                title: "Rixala - Абсолютная точность.",
+                desc: "Система находится в стадии финальной калибровки. Оставьте Ваш email, чтобы получить доступ к инструменту, который изменит Ваш подход к работе с данными. Никакого спама. Только результат.",
+                btn: "Доступ",
+                success: "> ЗАПРОС ПРИНЯТ. ОЖИДАЙТЕ ИНСТРУКЦИЙ.",
+                socials: "Каналы связи"
+            },
+            jp: {
+                title: "Rixala - 絶対的な精度。",
+                desc: "システムは最終調整段階にあります。データへのアプローチを変えるツールへのアクセスを得るために、メールアドレスを残してください。スパムはありません。結果のみです。",
+                btn: "アクセス",
+                success: "> リクエスト承認。指示をお待ちください。",
+                socials: "通信チャネル"
+            },
+            cn: {
+                title: "Rixala - 绝对精度。",
+                desc: "系统处于最终校准阶段。留下您的电子邮件以获取将改变您处理数据方式的工具的访问权限。没有垃圾邮件。只有结果。",
+                btn: "获取访问",
+                success: "> 请求已接受。等待指示。",
+                socials: "通讯渠道"
+            }
+        };
+
+        const langBtns = document.querySelectorAll('.lang-btn');
+
+        function setLanguage(lang) {
+            document.getElementById('t-title').innerText = translations[lang].title;
+            document.getElementById('t-desc').innerText = translations[lang].desc;
+            document.getElementById('t-btn').innerText = translations[lang].btn;
+            document.getElementById('t-success').innerText = translations[lang].success;
+            document.getElementById('t-socials').innerText = translations[lang].socials;
+            document.documentElement.lang = lang;
+
+            langBtns.forEach(b => {
+                if (b.getAttribute('data-lang') === lang) {
+                    b.classList.add('active');
+                } else {
+                    b.classList.remove('active');
+                }
+            });
+        }
+
+        function detectUserLanguage() {
+            const userLang = navigator.language || navigator.userLanguage;
+            let baseLang = userLang.split('-')[0].toLowerCase();
+            
+            if (baseLang === 'zh') baseLang = 'cn';
+            if (baseLang === 'ja') baseLang = 'jp';
+
+            const supportedLangs = ['en', 'es', 'ru', 'jp', 'cn'];
+            
+            return supportedLangs.includes(baseLang) ? baseLang : 'en';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const detectedLang = detectUserLanguage();
+            setLanguage(detectedLang);
+        });
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+
+        const form = document.getElementById('notify-form');
+        const successMsg = document.getElementById('success-message');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.style.display = 'none';
+            successMsg.classList.remove('hidden');
+        });
     </script>
 </body>
 </html>
